@@ -1,13 +1,16 @@
 package com.example.vm510l.myapplication2;
 
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -18,17 +21,30 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.security.GeneralSecurityException;
+import java.util.Vector;
+import java.util.logging.Logger;
+
+import io.opencensus.tags.Tag;
+
+import static com.example.vm510l.myapplication2.GirlHackathon.body;
+
 public class MainActivity extends AppCompatActivity implements OnMapReadyCallback {
     private MapView mMapView;
     private static final String MAPVIEW_BUNDLE_KEY = "MapViewBundleKey";
     private EditText input;
+    private TextView output;
     private Button pinChe;
+    private int lat;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
         // *** IMPORTANT ***
         // MapView requires that the Bundle you pass contain _ONLY_ MapView SDK
         // objects or sub-Bundles.
@@ -46,9 +62,24 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     private View.OnClickListener listener = new View.OnClickListener(){
         @Override
         public void onClick(View v) {
-            Toast.makeText(MainActivity.this, input.getText().toString(), Toast.LENGTH_LONG).show();
+            GirlHackathon gh = new GirlHackathon();
+            GirlHackathon my = new GirlHackathon();
+            Vector<GirlHackathon> data = new Vector<GirlHackathon>();
+
+            try {
+                data = body(my);
+            }catch(Exception e){
+                Log.d("exc\n",e.toString());}
+                gh = data.get(0);
+            float a = gh.getGetOnLatitude();
+          //  Toast.makeText(MainActivity.this, "结果："+ a, Toast.LENGTH_LONG).show();
+            output.setText("    最佳拼车：路线重合率"+gh.getOverlap()+"\n    里程长度："+gh.getDuration()
+              +"\n    可拼车对象："+data.size()+"位");
+           // Toast.makeText(MainActivity.this, "结果："+ a, Toast.LENGTH_LONG).show();
+
         }
     };
+
 
 @Override
 public void onMapReady(GoogleMap map) {
@@ -60,60 +91,50 @@ public void onMapReady(GoogleMap map) {
     map.moveCamera(CameraUpdateFactory.newLatLng(appointLoc));
 }
 
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
 
-        Bundle mapViewBundle = outState.getBundle(MAPVIEW_BUNDLE_KEY);
-        if (mapViewBundle == null) {
-            mapViewBundle = new Bundle();
-            outState.putBundle(MAPVIEW_BUNDLE_KEY, mapViewBundle);
-        }
-
-        mMapView.onSaveInstanceState(mapViewBundle);
-    }
 
     @Override
     protected void onResume() {
         super.onResume();
-        mMapView.onResume();
+      //  mMapView.onResume();
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        mMapView.onStart();
+       // mMapView.onStart();
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        mMapView.onStop();
+  //      mMapView.onStop();
     }
 
 
     @Override
     protected void onPause() {
-        mMapView.onPause();
+     //   mMapView.onPause();
         super.onPause();
     }
 
     @Override
     protected void onDestroy() {
-        mMapView.onDestroy();
+      //  mMapView.onDestroy();
         super.onDestroy();
     }
 
     @Override
     public void onLowMemory() {
         super.onLowMemory();
-        mMapView.onLowMemory();
+     //   mMapView.onLowMemory();
     }
 
     private void initView()
     {
         input=(EditText) findViewById(R.id.txtBegin);
         pinChe=(Button) findViewById(R.id.button3);
+        output = (TextView) findViewById(R.id.result);
     }
     public void onClick(View v) {
         switch (v.getId()) {

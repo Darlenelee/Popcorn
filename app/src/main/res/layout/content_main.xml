@@ -26,9 +26,9 @@
     <EditText
         android:id="@+id/txtBegin"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="76dp"
         android:layout_marginBottom="9dp"
-        android:hint="输入出发地点经纬度"
+        android:hint="输入出发地点"
         android:textAlignment="center"
         android:textSize="15sp"
         app:layout_constraintBottom_toTopOf="@+id/txtEnd"
@@ -41,10 +41,10 @@
         android:id="@+id/txtEnd"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:hint="输入目的地经纬度"
+        android:hint="输入目的地"
+        android:imeOptions="actionSearch"
         android:textAlignment="center"
         android:textSize="15sp"
-        android:imeOptions="actionSearch"
         app:layout_constraintBottom_toTopOf="@+id/textView2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -57,13 +57,27 @@
         android:layout_width="0dp"
         android:layout_height="33dp"
         android:layout_marginBottom="58dp"
-        android:text="时间:2017-01-01.xx:xx,人数:x"
+        android:text="时间:2016-04-02.19:30,人数:1"
         android:textAlignment="center"
         android:textSize="15sp"
         app:layout_constraintBottom_toTopOf="@+id/mMapView"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtEnd" />
+
+    <TextView
+        android:id="@+id/result"
+        android:layout_width="367dp"
+        android:layout_height="57dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.9"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.296" />
 
     <!--<fragment xmlns:android="http://schemas.android.com/apk/res/android"-->
     <!--xmlns:map="http://schemas.android.com/apk/res-auto"-->
@@ -85,7 +99,7 @@
         android:layout_height="269dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginBottom="29dp"
-        android:layout_marginEnd="28dp"
+        android:layout_marginEnd="16dp"
         android:background="#66ff0000"
         app:layout_constraintBottom_toTopOf="@+id/button3"
         app:layout_constraintEnd_toEndOf="parent"
@@ -94,10 +108,11 @@
     <Button
         android:id="@+id/button3"
         android:layout_width="0dp"
-        android:layout_height="44dp"
+        android:layout_height="68dp"
         android:text="寻找拼车"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/mMapView" />
 </android.support.constraint.ConstraintLayout>
